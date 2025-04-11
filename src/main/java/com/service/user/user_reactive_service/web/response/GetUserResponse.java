@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "create")
 public class GetUserResponse implements Serializable {
 
     @Serial

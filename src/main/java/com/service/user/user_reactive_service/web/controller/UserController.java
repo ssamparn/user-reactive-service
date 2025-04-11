@@ -19,7 +19,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,31 +37,15 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public Mono<GetUserResponse> getUser(@PathVariable("userId") UUID userId) {
-        return Mono.just(
-                new GetUserResponse(
-                        userId,
-                        "Sashank",
-                        "Samantray",
-                        "sashank@gmail.com")
-        );
+    public Mono<ResponseEntity<GetUserResponse>> getUser(@PathVariable("userId") UUID userId) {
+        return userService.getUser(userId)
+                .map(response -> ResponseEntity.status(HttpStatus.OK).body(response))
+                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));
     }
 
     @GetMapping
-    public Flux<GetUserResponse> getUsers(@RequestParam(value = "offset", defaultValue = "0") int offset,
+    public Flux<GetUserResponse> getUsers(@RequestParam(value = "page", defaultValue = "0") int page,
                                           @RequestParam(value = "limit", defaultValue = "50") int limit) {
-
-        List<GetUserResponse> usersList = List.of(new GetUserResponse(
-                        UUID.randomUUID(),
-                        "Sashank",
-                        "Samantray",
-                        "sashank@gmail.com"),
-                new GetUserResponse(UUID.randomUUID(),
-                        "Monalisa",
-                        "Samantray",
-                        "monalisa@gmail.com")
-        );
-
-        return Flux.fromIterable(usersList);
+        return userService.getAllUsers(page, limit);
     }
 }
