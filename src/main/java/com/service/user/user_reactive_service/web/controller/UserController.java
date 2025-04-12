@@ -1,9 +1,9 @@
 package com.service.user.user_reactive_service.web.controller;
 
 import com.service.user.user_reactive_service.service.UserService;
-import com.service.user.user_reactive_service.web.request.CreateUserRequest;
-import com.service.user.user_reactive_service.web.response.CreateUserResponse;
-import com.service.user.user_reactive_service.web.response.GetUserResponse;
+import com.service.user.user_reactive_service.web.model.request.CreateUserRequest;
+import com.service.user.user_reactive_service.web.model.response.CreateUserResponse;
+import com.service.user.user_reactive_service.web.model.response.GetUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

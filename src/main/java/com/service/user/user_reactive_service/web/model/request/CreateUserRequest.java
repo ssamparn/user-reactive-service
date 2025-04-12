@@ -1,4 +1,4 @@
-package com.service.user.user_reactive_service.web.request;
+package com.service.user.user_reactive_service.web.model.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

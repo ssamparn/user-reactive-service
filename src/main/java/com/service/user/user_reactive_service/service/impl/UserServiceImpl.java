@@ -3,12 +3,13 @@ package com.service.user.user_reactive_service.service.impl;
 import com.service.user.user_reactive_service.mapper.UserMapper;
 import com.service.user.user_reactive_service.repository.UserRepository;
 import com.service.user.user_reactive_service.service.UserService;
-import com.service.user.user_reactive_service.web.request.CreateUserRequest;
-import com.service.user.user_reactive_service.web.response.CreateUserResponse;
-import com.service.user.user_reactive_service.web.response.GetUserResponse;
+import com.service.user.user_reactive_service.web.model.request.CreateUserRequest;
+import com.service.user.user_reactive_service.web.model.response.CreateUserResponse;
+import com.service.user.user_reactive_service.web.model.response.GetUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,9 +24,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public Mono<UserDetails> findByUsername(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toUserDetails);
+    }
+
+    @Override
     public Mono<CreateUserResponse> createUser(Mono<CreateUserRequest> requestMono) {
         return requestMono
-                .mapNotNull(userMapper::toUserEntity)
+                .flatMap(userMapper::toUserEntityMono)
                 .flatMap(userRepository::save)
                 .mapNotNull(userMapper::toCreateUserResponse);
     }

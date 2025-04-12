@@ -1,4 +1,4 @@
-package com.service.user.user_reactive_service.web.response;
+package com.service.user.user_reactive_service.web.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
