@@ -14,6 +14,10 @@ server:
     include-binding-errors: always
     include-message: always
 
+jwt:
+  token:
+    secret: dv7m9eFK6x0aJXkM4Nxk7aG5ryncn04y7vSEdHHfDBWuPQM6CnDwpzBZbEBfhb5A
+
 # enables debug logging for the H2 R2DBC driver
 
 logging:

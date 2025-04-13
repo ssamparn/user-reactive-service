@@ -3,6 +3,7 @@ package com.service.user.user_reactive_service.service.impl;
 import com.service.user.user_reactive_service.entity.UserEntity;
 import com.service.user.user_reactive_service.repository.UserRepository;
 import com.service.user.user_reactive_service.service.AuthenticationService;
+import com.service.user.user_reactive_service.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final ReactiveAuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     /* *
      * User's email represents userName here
@@ -36,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Map<String, String> createAuthResponse(UserEntity userEntity) {
         Map<String, String> authResponse = new HashMap<>();
         authResponse.put("userId", userEntity.getId().toString());
-        authResponse.put("accessToken", "Jwt");
+        authResponse.put("accessToken", jwtService.generateJwtToken(userEntity.getId().toString()));
         return authResponse;
     }
 }

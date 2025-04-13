@@ -1,4 +1,4 @@
-package com.service.user.user_reactive_service.infrastructure;
+package com.service.user.user_reactive_service.infrastructure.configs;
 
 import org.h2.tools.Server;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -26,12 +26,4 @@ public class InMemoryDbConfig {
     public void onApplicationStop() throws SQLException {
         this.h2WebServer.stop();
     }
-
-//    @Bean
-//    public ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
-//        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
-//        initializer.setConnectionFactory(connectionFactory);
-//        initializer.setDatabasePopulator(new ResourceDatabasePopulator(new ClassPathResource("schema.sql")));
-//        return initializer;
-//    }
 }
