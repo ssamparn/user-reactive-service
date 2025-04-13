@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("authentication.principal.equals(#userId.toString()) or hasRole('ROLE_ADMIN')")
     public Mono<ResponseEntity<GetUserResponse>> getUser(@PathVariable("userId") UUID userId) {
         return userService.getUser(userId)
                 .map(response -> ResponseEntity.status(HttpStatus.OK).body(response))
